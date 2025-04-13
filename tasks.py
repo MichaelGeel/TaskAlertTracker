@@ -1,6 +1,10 @@
 import datetime as dt
 from enum import Enum
 
+
+"""
+Redact Phase names as IP when finished.
+"""
 class Phase(Enum):
     WB_CREATION = 1
     WB_COMPLETION = 2
@@ -12,6 +16,9 @@ class Phase(Enum):
     UNBLOCKED = 8
 
 
+"""
+Redact Phase names as IP when finished.
+"""
 class Task():
     def __init__(
             self, 
