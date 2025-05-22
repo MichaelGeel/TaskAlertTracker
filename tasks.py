@@ -94,33 +94,46 @@ class Task():
         # print(self._stages)
 
 
-# TODO: Define a dunder get for the Task that creates a JSON object of the task (uses the dunder get of the stages) for storage.
 # TODO: Create a post Artwork Release phase init that initializes the rest of the stages.
 # TODO: Return date set into the active call to get around not being able to set dates from Artwork Release beyond.
 # TODO: Test that the match case actually works.
+# TODO: Test having 2 stage classes (one for all data before artwork release, one for all after)
 
 class Stage():
     def __init__(
             self,
             name: str,
             duration: int,
-            start_date: dt.datetime,
             ):
         self._name = name
         self._duration = duration
         self._active = False
         self._completed = False
+
+
+    def _set_active(self,start_date: dt.datetime,):
+        self._active = True
         self._start_date = start_date
         self._end_date = start_date + dt.timedelta(days=self._duration)
-
-
-    def _set_active(self):
-        self._active = True
         
 
     def _set_completed(self):
         self._active = False
         self._completed = True
 
+
+class Phase1():
+    def __init__(
+            self,
+            start_date: dt.datetime,
+            urgency: int
+            ):
+        self._start_date = start_date
+        self._urgency = urgency
+
+    def _create_phase(
+            self
+        ):
+        pass
 
 # TODO: Define a __get__ (check correct dunder function) that returns the stats of the Stage as a dict for storage.
