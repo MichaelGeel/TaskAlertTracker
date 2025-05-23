@@ -5,15 +5,17 @@ from enum import Enum
 """
 Redact Phase names as IP when finished.
 """
-class Phase(Enum):
+class FirstPhase(Enum):
     WB_CREATION = 1
     WB_COMPLETION = 2
     ITEM_CREATION = 3
-    ARTWORK_RELEASE = 4
-    PIR_QIR = 5
-    COST_ROLLUP = 6
-    SPECIFICATION = 7
-    UNBLOCKED = 8
+
+class SecondPhase(Enum):
+    ARTWORK_RELEASE = 1
+    PIR_QIR = 2
+    COST_ROLLUP = 3
+    SPECIFICATION = 4
+    UNBLOCKED = 5
 
 
 """
@@ -35,37 +37,12 @@ class Task():
         self._description = description
         self._market = market
         self._urgent = urgent
-        self._phase = Phase(1)
         self._stages = {}
         self._create_stages()
         self._completed = False
 
     def _create_stages(self):
-        data_setter = {
-            "name": "",
-            "days": 0,
-            "date_init": self._entry_date,
-            "init": True
-            }
-        if self._urgent:
-            data_setter["urgent"] = 2
-        else:
-            data_setter["urgent"] = 1
-        for val in Phase:
-            print(val)
-        #     match val:
-        #         case Phase.WB_CREATION:
-        #             data_setter["name"] = "WorkBook Creation"
-        #             data_setter["days"] = int(7//data_setter["urgent"])
-        #             break
-        #         case Phase.WB_COMPLETION:
-        #             data_setter["name"] = "WorkBook Completion"
-        #             data_setter["days"] = int(7//data_setter["urgent"])
-        #             break
-        #         case Phase.ITEM_CREATION:
-        #             data_setter["name"] = "SysItem Creation"
-        #             data_setter["days"] = int(7//data_setter["urgent"])
-        #             break
+        pass
         #         case Phase.ARTWORK_RELEASE:
         #             data_setter["name"] = "Artwork Release"
         #             data_setter["days"] = int(-2//data_setter["urgent"])
@@ -87,7 +64,7 @@ class Task():
         #             data_setter["name"] = "SysUnblock"
         #             data_setter["days"] = int(2//data_setter["urgent"])
         #             break
-        #     self._stages[val] = Stage(data_setter["name"], data_setter["days"], data_setter["date_init"])
+        #     self._stages[val] = Stage(data_setter["name"], data_setter["days"])
         #     if data_setter["days"] > 0 & data_setter["init"]:
         #         data_setter["date_init"] += dt.timedelta(days=data_setter["days"])
         #         self._stages[val]._set_active()
@@ -111,7 +88,7 @@ class Stage():
         self._completed = False
 
 
-    def _set_active(self,start_date: dt.datetime,):
+    def _set_active(self, start_date: dt.datetime,):
         self._active = True
         self._start_date = start_date
         self._end_date = start_date + dt.timedelta(days=self._duration)
@@ -125,15 +102,45 @@ class Stage():
 class Phase1():
     def __init__(
             self,
-            start_date: dt.datetime,
-            urgency: int
+            urgency: bool = False
             ):
-        self._start_date = start_date
         self._urgency = urgency
+        self._create_phase()
+        self._init_phase
 
     def _create_phase(
             self
         ):
-        pass
+        self._stages = []
+        data_setter = {
+            "name": "",
+            "days": 0,
+            "urgent": 1
+            }
+        if self._urgency:
+            data_setter["urgent"] *= 2
+        for phase in FirstPhase:
+            match phase:
+                case FirstPhase.WB_CREATION:
+                    data_setter["name"] = "WorkBook Creation"
+                    data_setter["days"] = int(7//data_setter["urgent"])
+                case FirstPhase.WB_COMPLETION:
+                    data_setter["name"] = "WorkBook Completion"
+                    data_setter["days"] = int(7//data_setter["urgent"])
+                case FirstPhase.ITEM_CREATION:
+                    data_setter["name"] = "SysItem Creation"
+                    data_setter["days"] = int(7//data_setter["urgent"])
+            self._stages.append(Stage(data_setter["name"], data_setter["days"]))
+
+    def _init_phase(self, start_date: dt.datetime):
+        rolling_date = start_date
+        for stage in self._stages:
+            stage._set_active(rolling_date)
+            rolling_date += dt.timedelta(days=stage._duration)
+        
+
+
 
 # TODO: Define a __get__ (check correct dunder function) that returns the stats of the Stage as a dict for storage.
+# TODO: Define a __print__ dunder that prints the details of the stage when called.
+# TODO: Test Phase1 fully to ensure the functionality is 100% completed.
