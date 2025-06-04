@@ -2,47 +2,29 @@ import datetime as dt
 from enum import Enum
 
 
-"""
-Redact Phase names as IP when finished.
-"""
-class FirstPhase(Enum):
-    WB_CREATION = 1
-    WB_COMPLETION = 2
-    ITEM_CREATION = 3
 
-class SecondPhase(Enum):
-    ARTWORK_RELEASE = 1
-    PIR_QIR = 2
-    COST_ROLLUP = 3
-    SPECIFICATION = 4
-    UNBLOCKED = 5
+# class Task():
+#     def __init__(
+#             self, 
+#             entry_date: dt.datetime,
+#             material_master: int,
+#             sku_code: int,
+#             description: str,
+#             market: str,
+#             urgent: bool = False
+#             ):
+#         self._entry_date = entry_date
+#         self._material_master = material_master
+#         self._sku_code = sku_code
+#         self._description = description
+#         self._market = market
+#         self._urgent = urgent
+#         self._stages = {}
+#         self._create_stages()
+#         self._completed = False
 
-
-"""
-Redact Phase names as IP when finished.
-"""
-class Task():
-    def __init__(
-            self, 
-            entry_date: dt.datetime,
-            material_master: int,
-            sku_code: int,
-            description: str,
-            market: str,
-            urgent: bool = False
-            ):
-        self._entry_date = entry_date
-        self._material_master = material_master
-        self._sku_code = sku_code
-        self._description = description
-        self._market = market
-        self._urgent = urgent
-        self._stages = {}
-        self._create_stages()
-        self._completed = False
-
-    def _create_stages(self):
-        pass
+#     def _create_stages(self):
+#         pass
         #         case Phase.ARTWORK_RELEASE:
         #             data_setter["name"] = "Artwork Release"
         #             data_setter["days"] = int(-2//data_setter["urgent"])
@@ -99,38 +81,28 @@ class Stage():
         self._completed = True
 
 
-class Phase1():
+class Phase():
     def __init__(
             self,
+            stage_config: list,
             urgency: bool = False
             ):
-        self._urgency = urgency
+        self._urgent = urgency
+        self._stage_config = stage_config
         self._create_phase()
-        self._init_phase
 
     def _create_phase(
             self
         ):
         self._stages = []
-        data_setter = {
-            "name": "",
-            "days": 0,
-            "urgent": 1
-            }
-        if self._urgency:
-            data_setter["urgent"] *= 2
-        for phase in FirstPhase:
-            match phase:
-                case FirstPhase.WB_CREATION:
-                    data_setter["name"] = "WorkBook Creation"
-                    data_setter["days"] = int(7//data_setter["urgent"])
-                case FirstPhase.WB_COMPLETION:
-                    data_setter["name"] = "WorkBook Completion"
-                    data_setter["days"] = int(7//data_setter["urgent"])
-                case FirstPhase.ITEM_CREATION:
-                    data_setter["name"] = "SysItem Creation"
-                    data_setter["days"] = int(7//data_setter["urgent"])
-            self._stages.append(Stage(data_setter["name"], data_setter["days"]))
+        urgency_multiplier = 1
+        if self._urgent:
+            urgency_multiplier = 0.5
+        for stage in self._stage_config:
+            print(stage)
+
+
+            # self._stages.append(Stage(data_setter["name"], data_setter["days"]))
 
     def _init_phase(self, start_date: dt.datetime):
         rolling_date = start_date
