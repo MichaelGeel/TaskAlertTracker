@@ -53,11 +53,6 @@ from enum import Enum
         # print(self._stages)
 
 
-# TODO: Create a post Artwork Release phase init that initializes the rest of the stages.
-# TODO: Return date set into the active call to get around not being able to set dates from Artwork Release beyond.
-# TODO: Test that the match case actually works.
-# TODO: Test having 2 stage classes (one for all data before artwork release, one for all after)
-
 class Stage():
     def __init__(
             self,
@@ -99,10 +94,8 @@ class Phase():
         if self._urgent:
             urgency_multiplier = 0.5
         for stage in self._stage_config:
-            print(stage)
+            self._stages.append(Stage(stage["name"], stage["duration"]))
 
-
-            # self._stages.append(Stage(data_setter["name"], data_setter["days"]))
 
     def _init_phase(self, start_date: dt.datetime):
         rolling_date = start_date
@@ -115,4 +108,3 @@ class Phase():
 
 # TODO: Define a __get__ (check correct dunder function) that returns the stats of the Stage as a dict for storage.
 # TODO: Define a __print__ dunder that prints the details of the stage when called.
-# TODO: Test Phase1 fully to ensure the functionality is 100% completed.
