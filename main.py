@@ -1,4 +1,4 @@
 import tkinter as tk
-from tasks import Task
+from service.tasks import Task
 import datetime as dt
 
