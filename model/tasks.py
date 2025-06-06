@@ -102,8 +102,6 @@ class Phase():
         for stage in self._stages:
             stage._set_active(rolling_date)
             rolling_date += dt.timedelta(days=stage._duration)
-        
-
 
 
 # TODO: Define a __get__ (check correct dunder function) that returns the stats of the Stage as a dict for storage.

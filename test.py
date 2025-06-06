@@ -1,5 +1,5 @@
 import tkinter as tk
-from service.tasks import Phase
+from model.tasks import Phase
 import datetime as dt
 
 # root = tk.Tk()
