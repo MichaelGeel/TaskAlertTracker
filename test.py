@@ -1,4 +1,3 @@
-import tkinter as tk
 from model.tasks import Phase
 import datetime as dt
 
