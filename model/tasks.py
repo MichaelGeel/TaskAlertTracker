@@ -22,3 +22,6 @@ class Task(BaseModel):
     hold_reason: str|None
     active_stage_index: int
     stages: list[Stage]
+
+
+# TODO: set up attribute constraints on certain fields using the Pydantic Field method based on requirements for the codes.
