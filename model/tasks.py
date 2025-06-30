@@ -5,22 +5,23 @@ class Stage(BaseModel):
     name: str
     description: str
     duration: int
-    start_date: dt.datetime|None
-    end_date: dt.datetime|None
+    start_date: dt.datetime|None = None
+    end_date: dt.datetime|None = None
 
 class Task(BaseModel):
     name: str
+    type: str
     task_description: str
     entry_date: dt.datetime
-    completed_date: dt.datetime|None
+    completed_date: dt.datetime|None = None
     material_master: str
     sku_code: str
     market: str
     urgency: bool
     completed: bool
-    on_hold: bool
-    hold_reason: str|None
-    active_stage_index: int
+    on_hold: bool = False
+    hold_reason: str|None = None
+    next_stage_index: int = 1
     stages: list[Stage]
 
 
