@@ -1,5 +1,11 @@
 from .init import process_tracker
+import datetime as dt
 from model.tasks import Task, Stage
+
+
+"""
+Because MongoDB autocreates collections and databases, no explicit creation of the collection/database is necessary.
+"""
 
 
 def model_to_dict(task: Task) -> dict:
@@ -7,6 +13,7 @@ def model_to_dict(task: Task) -> dict:
 
 def entry_to_model(entry: dict) -> Task:
     return Task(
+        entry.id,
         entry.name,
         entry.type,
         entry.task_description,
@@ -22,6 +29,7 @@ def entry_to_model(entry: dict) -> Task:
         entry.next_stage_index,
         [
         Stage(
+            stage["id"],
             stage["name"], 
             stage["description"], 
             stage["duration"], 
@@ -31,7 +39,18 @@ def entry_to_model(entry: dict) -> Task:
         ]
     )
 
+def fetch_all(type: str) -> list[Task]:
+    pass
 
-"""
-Because MongoDB autocreates collections and databases, no explicit creation of the collection/database is necessary.
-"""
+#Move to report.py:
+def fetch_report(type: str, entry_date: dt.datetime) -> list[Task]:
+    pass
+
+def create(task: Task) -> Task:
+    pass
+
+def update(task: Task) -> Task:
+    pass
+
+def delete(task: Task) -> bool:
+    pass

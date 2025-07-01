@@ -2,6 +2,7 @@ import datetime as dt
 from pydantic import BaseModel
 
 class Stage(BaseModel):
+    id: str | None = None
     name: str
     description: str
     duration: int
@@ -9,6 +10,7 @@ class Stage(BaseModel):
     end_date: dt.datetime|None = None
 
 class Task(BaseModel):
+    id: str | None = None
     name: str
     type: str
     task_description: str
