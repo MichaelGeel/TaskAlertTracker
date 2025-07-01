@@ -40,14 +40,21 @@ def entry_to_model(entry: dict) -> Task:
     )
 
 def fetch_all(type: str) -> list[Task]:
-    pass
+    # TODO: Include type filter into the find query to specify the type of task.
+    # TODO: Test
+    return process_tracker.tasks.find()
 
-#Move to report.py:
 def fetch_report(type: str, entry_date: dt.datetime) -> list[Task]:
     pass
 
-def create(task: Task) -> Task:
+def fetch_one(id: str) -> Task:
     pass
+
+# TODO: Test, once fetch_one implemented.
+def create(task: Task) -> Task:
+    task_id = process_tracker.tasks.insert_one(model_to_dict(task)).inserted_id
+    return fetch_one(task_id)
+
 
 def update(task: Task) -> Task:
     pass
