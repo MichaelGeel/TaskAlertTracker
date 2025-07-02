@@ -40,23 +40,24 @@ def entry_to_model(entry: dict) -> Task:
     )
 
 def fetch_all(type: str) -> list[Task]:
-    # TODO: Include type filter into the find query to specify the type of task.
     # TODO: Test
-    return process_tracker.tasks.find()
+    # TODO: Error handling incase invalid type/incorrect data type
+    return process_tracker.tasks.find({"type": type})
 
 def fetch_report(type: str, entry_date: dt.datetime) -> list[Task]:
     pass
 
 def fetch_one(id: str) -> Task:
-    pass
+    # Error handling in case of invalid id value/type
+    # Test
+    return process_tracker.tasks.find({"id": id})
 
 # TODO: Test, once fetch_one implemented.
 def create(task: Task) -> Task:
     task_id = process_tracker.tasks.insert_one(model_to_dict(task)).inserted_id
     return fetch_one(task_id)
 
-
-def update(task: Task) -> Task:
+def update(updates: dict) -> Task:
     pass
 
 def delete(task: Task) -> bool:
