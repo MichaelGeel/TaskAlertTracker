@@ -1,8 +1,10 @@
 import datetime as dt
 from pydantic import BaseModel
+from bson.objectid import ObjectId
+
 
 class Stage(BaseModel):
-    id: str | None = None
+    id: ObjectId | None = None
     name: str
     description: str
     duration: int
@@ -10,13 +12,13 @@ class Stage(BaseModel):
     end_date: dt.datetime|None = None
 
 class Task(BaseModel):
-    id: str | None = None
+    id: ObjectId | None = None
     name: str
     type: str
     task_description: str
     entry_date: dt.datetime
     completed_date: dt.datetime|None = None
-    material_master: str
+    material_master: int
     sku_code: str
     market: str
     urgency: bool

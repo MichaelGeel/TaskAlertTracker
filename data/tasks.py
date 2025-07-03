@@ -1,6 +1,7 @@
 from .init import process_tracker
 import datetime as dt
 from model.tasks import Task, Stage
+from bson.objectid import ObjectId
 
 
 """
@@ -13,13 +14,13 @@ def model_to_dict(task: Task) -> dict:
 
 def entry_to_model(entry: dict) -> Task:
     return Task(
-        entry.id,
+        str(entry._id),
         entry.name,
         entry.type,
         entry.task_description,
         entry.entry_date,
         entry.completed_date,
-        entry.material_master,
+        int(entry.material_master),
         entry.sku_code,
         entry.market,
         entry.urgency,
@@ -29,7 +30,7 @@ def entry_to_model(entry: dict) -> Task:
         entry.next_stage_index,
         [
         Stage(
-            stage["id"],
+            str(stage["_id"]),
             stage["name"], 
             stage["description"], 
             stage["duration"], 
@@ -39,23 +40,30 @@ def entry_to_model(entry: dict) -> Task:
         ]
     )
 
+# TODO: Validate whether actually need to worry about exposing the _id field to the front end or if okay and more a sensitive data concern.
+
 def fetch_all(type: str) -> list[Task]:
     # TODO: Test
-    # TODO: Error handling incase invalid type/incorrect data type
-    return process_tracker.tasks.find({"type": type})
+    # TODO: Error handling incase invalid type - if doesn't just return empty list
+    raw_tasks = process_tracker.tasks.find({"type": type})
+    return [entry_to_model(task) for task in raw_tasks]
 
 def fetch_report(type: str, entry_date: dt.datetime) -> list[Task]:
-    pass
+    # TODO: Test
+    # TODO: Error handling incase invalid type - If doesn't just return empty list
+    raw_tasks = process_tracker.tasks.find({"type": type, "entry_date": {"$gte": entry_date}})
+    return [entry_to_model(task) for task in raw_tasks]
 
-def fetch_one(id: str) -> Task:
-    # Error handling in case of invalid id value/type
-    # Test
-    return process_tracker.tasks.find({"id": id})
+def fetch_one(id: ObjectId) -> Task:
+    # TODO: Error handling in case of invalid id value/type
+    # TODO: Test
+    return entry_to_model(process_tracker.tasks.find_one({"_id": id}))
 
-# TODO: Test, once fetch_one implemented.
 def create(task: Task) -> Task:
+    # TODO: Test
     task_id = process_tracker.tasks.insert_one(model_to_dict(task)).inserted_id
-    return fetch_one(task_id)
+    # Call fetch_one as insert_one only returns the _id of the created entry.
+    return fetch_one(task_id) 
 
 def update(updates: dict) -> Task:
     pass
