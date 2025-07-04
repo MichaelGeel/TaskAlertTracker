@@ -40,7 +40,7 @@ def entry_to_model(entry: dict) -> Task:
         ]
     )
 
-# TODO: Validate whether actually need to worry about exposing the _id field to the front end or if okay and more a sensitive data concern.
+# TODO: Check how to handling error with mongoDB and how to pass errors up through the layers.
 
 def fetch_all(type: str) -> list[Task]:
     # TODO: Test
@@ -61,6 +61,7 @@ def fetch_one(id: ObjectId) -> Task:
 
 def create(task: Task) -> Task:
     # TODO: Test
+    # TODO: Error handling for non-unique material_master
     task_id = process_tracker.tasks.insert_one(model_to_dict(task)).inserted_id
     # Call fetch_one as insert_one only returns the _id of the created entry.
     return fetch_one(task_id) 
