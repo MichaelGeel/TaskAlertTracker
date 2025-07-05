@@ -66,8 +66,19 @@ def create(task: Task) -> Task:
     # Call fetch_one as insert_one only returns the _id of the created entry.
     return fetch_one(task_id) 
 
-def update(updates: dict) -> Task:
-    pass
+# Expect updates to be in the format: {{"field_name": "updated_value"}, {"field_name": "updated_value"}}
+def update(task_id: str, updates: dict) -> Task:
+    # TODO: Test
+    # TODO: Error handling for object not found
+    # TODO: Error handling for attempting to update Material master to an existing value (Return existing field?)
+    # TODO: Ensure the task _id field not in the list of updates being pushed to the db.
+    task_id = process_tracker.tasks.update_one({"_id": ObjectId(task_id)}, {"$set": updates})
+    return fetch_one(task_id)
 
 def delete(task: Task) -> bool:
-    pass
+    # TODO: Error handling for file not found
+    # TODO: Test
+    task_dict = model_to_dict(task)
+    task_name = task_dict["name"]
+    process_tracker.tasks.delete_one({"_id": task_dict["_id"]})
+    return task_name
