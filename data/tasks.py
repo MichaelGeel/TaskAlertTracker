@@ -52,6 +52,7 @@ def fetch_report(type: str, entry_date: dt.datetime) -> list[Task]:
     # TODO: Test
     # TODO: Error handling incase invalid type - If doesn't just return empty list
     raw_tasks = process_tracker.tasks.find({"type": type, "entry_date": {"$gte": entry_date}})
+    # TODO: Data type handling to be done in service layer? Not necessarily a concern of the data layer?
     return [entry_to_model(task) for task in raw_tasks]
 
 def fetch_one(id: ObjectId) -> Task:
