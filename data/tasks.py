@@ -41,6 +41,8 @@ def entry_to_model(entry: dict) -> Task:
     )
 
 # TODO: Check how to handling error with mongoDB and how to pass errors up through the layers.
+# TODO: Managing type for the filtering. (Create separate list?)
+# TODO: Add availability for extraction based on the SKU Code?
 
 def fetch_all(type: str) -> list[Task]:
     # TODO: Test
