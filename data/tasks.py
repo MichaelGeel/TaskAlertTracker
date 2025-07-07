@@ -74,7 +74,8 @@ def update(task_id: str, updates: dict) -> Task:
     # TODO: Test
     # TODO: Error handling for object not found
     # TODO: Error handling for attempting to update Material master to an existing value (Return existing field?)
-    # TODO: Ensure the task _id field not in the list of updates being pushed to the db.
+    if "_id" in updates.keys():
+        del updates["_id"]
     task_id = process_tracker.tasks.update_one({"_id": ObjectId(task_id)}, {"$set": updates})
     return fetch_one(task_id)
 
