@@ -3,7 +3,7 @@ import datetime as dt
 
 mock_up_tasks = [
     {
-        "name": "First_Test",
+        "name": "First Test",
         "type": "tester",
         "task_description": "This is the first task",
         "entry_date": dt.datetime.now(),
@@ -27,14 +27,14 @@ mock_up_tasks = [
         ]
     },
     {
-        "name": "First_Test",
-        "type": "tester",
-        "task_description": "This is the first task",
+        "name": "Second Item",
+        "type": "diffs",
+        "task_description": "This is the second task",
         "entry_date": dt.datetime.now(),
-        "material_master": 123456,
+        "material_master": 123457,
         "sku_code": "1234567",
-        "market": "industrial",
-        "urgency": True,
+        "market": "mining",
+        "urgency": False,
         "completed": False,
         "stages": [
             {
