@@ -1,6 +1,7 @@
 from model.tasks import Task, Stage
 import datetime as dt
 import unittest
+from bson.objectid import ObjectId
 
 mock_up_tasks = [
     {
