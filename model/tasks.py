@@ -1,5 +1,10 @@
+from typing import Annotated, Any, Callable
+from fastapi import FastAPI
+
 import datetime as dt
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict, Field, GetJsonSchemaHandler
+from pydantic.json_schema import JsonSchemaValue
+from pydantic_core import core_schema
 from bson.objectid import ObjectId
 
 
@@ -10,6 +15,7 @@ class Stage(BaseModel):
     duration: int
     start_date: dt.datetime|None = None
     end_date: dt.datetime|None = None
+
 
 class Task(BaseModel):
     id: ObjectId | None = None

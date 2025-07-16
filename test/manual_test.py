@@ -1,7 +1,11 @@
+import sys
+
+sys.path.append("D:/PracWork/BD_PersonalProjects/SysAlert Task Notifs")
+
 from model.tasks import Task, Stage
 import datetime as dt
-import unittest
 from bson.objectid import ObjectId
+from data.tasks import *
 
 mock_up_tasks = [
     {
@@ -53,3 +57,5 @@ mock_up_tasks = [
         ]
     }
 ]
+
+print(create(mock_up_tasks[0]))

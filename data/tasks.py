@@ -62,10 +62,10 @@ def fetch_one(id: ObjectId) -> Task:
     # TODO: Test
     return entry_to_model(process_tracker.tasks.find_one({"_id": id}))
 
-def create(task: Task) -> Task:
+def create(task: dict) -> Task:
     # TODO: Test
     # TODO: Error handling for non-unique material_master
-    task_id = process_tracker.tasks.insert_one(model_to_dict(task)).inserted_id
+    task_id = process_tracker.tasks.insert_one(task).inserted_id
     # Call fetch_one as insert_one only returns the _id of the created entry.
     return fetch_one(task_id) 
 
